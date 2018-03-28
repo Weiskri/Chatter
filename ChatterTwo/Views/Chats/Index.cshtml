@@ -9,3 +9,27 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<div id="response"></div>
+<button id="getChats" class="btn btn-primary">Get Chats</button>
+
+@section Scripts {
+    <script>
+        $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
+            var jsonTest = JSON.parse(serverResponse);
+            console.log(jsonTest);
+            $("#response").text(jsonTest.firstName);
+        });
+
+
+
+        //var JsonTest = {
+        //    "firstName": "Bob", "lastName": "Sauce", "children": [{ "firstName": "Barbie", "age": 19 }, { "firstName": "Ron", "age": null }]
+        //}
+        //$("#response").text(JsonTest.children[0].firstName);
+        //$("#response").text(JsonTest.children[0].age);
+
+        //$.each("#response").text(JsonTest.children[0].firstName);
+    </script>
+    
+    }
