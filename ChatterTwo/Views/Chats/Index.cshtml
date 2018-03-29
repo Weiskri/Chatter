@@ -24,10 +24,22 @@
                 function () {
                     $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
                         var jsonTest = JSON.parse(serverResponse);
-                        console.log(jsonTest);
+                        //console.log(jsonTest);
+
+                        var ul = $("<ul>", { id: "messageList", "class": "bg-primary" });
+                        ul.click(function () { alert("ul was clicked!"); });
+                        $("#response").append(ul);
+
+                        $.each(jsonTest, function (inx, val) {
+                            var myBgClass = ["bg-info", "bg-warning"];
+                            var li = $("<li>", { id: "li" + inx, "class": myBgClass[inx % 2] });
+                            li.text(val.Message);
+                            li.click(function () { alert("my index is " + inx); });
+                            ul.append(li); //similar to $("#messageList").append(li), but more efficient
+
+                        });
 
                     })
-
                 }
             );
 
