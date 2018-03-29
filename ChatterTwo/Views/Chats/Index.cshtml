@@ -13,14 +13,31 @@
 <div id="response"></div>
 <button id="getChats" class="btn btn-primary">Get Chats</button>
 
+
+
 @section Scripts {
     <script>
-        $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
-            var jsonTest = JSON.parse(serverResponse);
-            console.log(jsonTest);
-            $("#response").text(jsonTest.firstName);
-        });
 
+        $(document).ready(function () {
+
+            $("#getChats").click(
+                function () {
+                    $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
+                        var jsonTest = JSON.parse(serverResponse);
+                        console.log(jsonTest);
+
+                    })
+
+                }
+            );
+
+            $("#postChats").click(
+
+            
+                );
+
+        }
+        );
 
 
         //var JsonTest = {

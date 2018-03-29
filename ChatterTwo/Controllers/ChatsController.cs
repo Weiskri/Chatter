@@ -24,11 +24,32 @@ namespace ChatterTwo.Controllers
 
         public JsonResult TestJson()
         {
-            string jsonTest = "{ \"firstName\": \"Bob\",\"lastName\": \"Sauce\", \"children\": [{\"firstName\": \"Barbie\", \"age\": 19 },{\"firstName\": \"Ron\", \"age\": null }] }";
+            //SELECT Chat.Message, Chat.Timestamp, AspNetUsers.Email
 
-                return Json(jsonTest, JsonRequestBehavior.AllowGet);
-            }
+            //FROM Chat
 
+            //INNER JOIN AspNetUsers ON Chat.UserID = AspNetUsers.Id
+
+            //ORDER BY Chat.TimeStamp DESC
+
+            //Now, the LINQ equivalent is declared as a variable (below).
+
+            var chats = from Chats in db.Chats
+                             join aNU in db.AspNetUsers 
+                              on Chats.UserID equals aNU.Id 
+                             select new
+                              {
+                                 Chats.Message,
+                                 Chats.TimeStamp,
+                                 aNU.UserName
+                              };
+
+
+            var output = JsonConvert.SerializeObject(chats.ToList());
+
+            return Json(output, JsonRequestBehavior.AllowGet);
+        }
+    
 
             // GET: Chats/Details/5
             public ActionResult Details(int? id)
