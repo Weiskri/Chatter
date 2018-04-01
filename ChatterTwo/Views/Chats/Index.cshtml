@@ -11,7 +11,12 @@
 </p>
 
 <div id="response"></div>
-<button id="getChats" class="btn btn-primary">Get Chats</button>
+<button id="getChats" class="btn btn-primary">Get Chats</button><br /><br />
+
+<form action="#">
+<input type="text" name="chat" value="Chat">
+<input type="submit" value="Submit" onclick="postChats">
+    </form>
 
 
 
@@ -20,8 +25,9 @@
 
         $(document).ready(function () {
 
-            $("#getChats").click(
-                function () {
+            $("#getChats").click(myFunction);
+
+                function myFunction() {
                     $.get("@Url.Action("TestJson", "Chats")", function (serverResponse) {
                         var jsonTest = JSON.parse(serverResponse);
                         //console.log(jsonTest);
@@ -33,7 +39,7 @@
                         $.each(jsonTest, function (inx, val) {
                             var myBgClass = ["bg-info", "bg-warning"];
                             var li = $("<li>", { id: "li" + inx, "class": myBgClass[inx % 2] });
-                            li.text(val.Message);
+                            li.text(val.TimeStamp);
                             li.click(function () { alert("my index is " + inx); });
                             ul.append(li); //similar to $("#messageList").append(li), but more efficient
 
@@ -41,7 +47,6 @@
 
                     })
                 }
-            );
 
             $("#postChats").click(
 
